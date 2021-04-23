@@ -1,0 +1,4 @@
+[submodule "3rdparty/qtmir"]
+	path = 3rdparty/qtmir
+	url = https://gitlab.com/fredldotme/qtmir
+	branch = ubports/xenial_-_edge_-_wayland_-_x11_-_multiscreen
