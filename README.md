@@ -25,5 +25,6 @@
 ### Technologies
 * Qt with QML
 * QtAV/ffmpeg or QtMultimedia/gstreamer
+* QtWebEngine (for web content support)
 * Mir (via QtMir)
 * Halium (for Android device support)
