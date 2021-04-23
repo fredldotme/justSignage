@@ -10,7 +10,7 @@ SRC_PATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 cd $SRC_PATH
 
 # Internal variables
-NO_CLEAN=0
+CLEAN=0
 BUILD_DEPS=0
 
 # Argument parsing
@@ -18,8 +18,8 @@ POSITIONAL=()
 while [[ $# -gt 0 ]]; do
     key="$1"
     case $key in
-        -n|--no-clean)
-        NO_CLEAN=1
+        -c|--clean)
+        CLEAN=1
         shift
         ;;
         -d|--deps)
@@ -45,7 +45,7 @@ function build_3rdparty_autogen {
 }
 
 function build_cmake {
-    if [ "$NO_CLEAN" == "0" ]; then
+    if [ "$CLEAN" == "1" ]; then
         if [ -d build ]; then
             rm -rf build
         fi
@@ -88,7 +88,7 @@ elif [ -f /usr/bin/dnf ]; then
     bash deps/dnf.sh
 fi
 
-if [ "$NO_CLEAN" == "0" ]; then
+if [ "$CLEAN" == "1" ]; then
     if [ -d $INSTALL ]; then
         sudo rm -rf $INSTALL
     fi
