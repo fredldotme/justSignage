@@ -14,25 +14,23 @@ CLEAN=0
 BUILD_DEPS=0
 
 # Argument parsing
-POSITIONAL=()
 while [[ $# -gt 0 ]]; do
     key="$1"
     case $key in
         -c|--clean)
-        CLEAN=1
-        shift
+            CLEAN=1
+            shift
         ;;
         -d|--deps)
-        BUILD_DEPS=1
-        shift
+            BUILD_DEPS=1
+            shift
         ;;
         *)
-        echo "usage: $0 [-d|--deps] [-n|--no-clean]"
-        exit 1
+            echo "usage: $0 [-d|--deps] [-n|--no-clean]"
+            exit 1
         ;;
     esac
 done
-set -- "${POSITIONAL[@]}" # restore positional parameters
 
 function build_3rdparty_autogen {
     echo "Building: $1"
@@ -50,7 +48,9 @@ function build_cmake {
             rm -rf build
         fi
     fi
-    mkdir build
+    if [ ! -d build ]; then
+        mkdir build
+    fi
     cd build
     PKG_CONF_SYSTEM=/usr/lib/x86_64-linux-gnu/pkgconfig
     PKG_CONF_INSTALL=$INSTALL/lib/pkgconfig:$INSTALL/lib/x86_64-linux-gnu/pkgconfig
