@@ -73,3 +73,7 @@ Thumbs.db
 
 # User files
 *.user
+
+# Build directory
+build/
+src/build-src-Desktop-Debug/
