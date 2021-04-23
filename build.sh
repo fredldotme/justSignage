@@ -53,8 +53,8 @@ fi
 
 # Build these deps on non-apt systems
 if [ ! -f /usr/bin/apt ]; then
-	build_3rdparty_cmake properties-cpp
-	build_3rdparty_cmake process-cpp
+    build_3rdparty_cmake properties-cpp
+    build_3rdparty_cmake process-cpp
 fi
 
 build_3rdparty_autogen click
