@@ -66,6 +66,7 @@ build_3rdparty_cmake lomiri-url-dispatcher
 build_3rdparty_cmake qtmir
 
 cd $SRC_PATH
+cd src
 if [ -d build ]; then
     rm -rf build
 fi
