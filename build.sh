@@ -16,6 +16,7 @@ elif [ -f /usr/bin/dnf ]; then
 fi
 
 function build_3rdparty_autogen {
+    echo "Building: $1"
     cd $SRC_PATH
     cd 3rdparty/$1
     ./autogen.sh
@@ -33,7 +34,11 @@ function build_3rdparty_cmake {
     fi
     mkdir build
     cd build
-    PKG_CONFIG_PATH=$INSTALL/lib64/pkgconfig:$INSTALL/lib/pkgconfig cmake .. \
+    PKG_CONF_SYSTEM=/usr/lib/x86_64-linux-gnu/pkgconfig
+    PKG_CONF_INSTALL=$INSTALL/lib/pkgconfig:$INSTALL/lib/x86_64-linux-gnu/pkgconfig
+    PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$PKG_CONF_SYSTEM:$PKG_CONF_INSTALL
+    env PKG_CONFIG_PATH=$PKG_CONFIG_PATH \
+    	cmake .. \
         -DCMAKE_INSTALL_PREFIX=$INSTALL \
         -DCMAKE_MODULE_PATH=$INSTALL \
         -DCMAKE_CXX_FLAGS=-isystem\ $INSTALL/include \
@@ -46,9 +51,14 @@ if [ -d $INSTALL ]; then
     sudo rm -rf $INSTALL
 fi
 
-build_3rdparty_cmake properties-cpp
-build_3rdparty_cmake process-cpp
+# Build these deps on non-apt systems
+if [ ! -f /usr/bin/apt ]; then
+	build_3rdparty_cmake properties-cpp
+	build_3rdparty_cmake process-cpp
+fi
+
 build_3rdparty_autogen click
+build_3rdparty_cmake lomiri-api
 build_3rdparty_cmake lomiri-app-launch
 build_3rdparty_cmake qtmir
 
