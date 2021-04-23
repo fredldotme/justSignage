@@ -1,7 +1,3 @@
-[submodule "3rdparty/qtmir"]
-	path = 3rdparty/qtmir
-	url = https://gitlab.com/fredldotme/qtmir
-	branch = ubports/xenial_-_edge_-_wayland_-_x11_-_multiscreen
 [submodule "3rdparty/process-cpp"]
 	path = 3rdparty/process-cpp
 	url = https://gitlab.com/ubports/core/lib-cpp/process-cpp.git
@@ -21,3 +17,7 @@
 [submodule "3rdparty/lomiri-api"]
 	path = 3rdparty/lomiri-api
 	url = https://gitlab.com/ubports/core/lomiri-api
+[submodule "3rdparty/qtmir"]
+	path = 3rdparty/qtmir
+	url = https://gitlab.com/ubports/core/qtmir
+	branch = main
