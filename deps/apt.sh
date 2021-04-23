@@ -26,11 +26,22 @@ sudo apt install -y \
     libmircookie-dev \
     libmirrenderer-dev \
     libmiral-dev \
+    mirtest-dev \
     mir-renderer-gl-dev \
     libmirwayland-dev \
     libwayland-dev \
     qtbase5-dev \
+    qtbase5-private-dev \
     qtdeclarative5-dev \
+    qtdeclarative5-private-dev \
     libqt5sensors5-dev \
     libqtdbustest1-dev \
-    libcurl4-openssl-dev
+    libqtdbusmock1-dev \
+    libgsettings-qt-dev \
+    libcurl4-openssl-dev \
+    libsqlite3-dev \
+    libapparmor-dev \
+    libfontconfig1-dev \
+    gettext \
+    intltool \
+    valgrind

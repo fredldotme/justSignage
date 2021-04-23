@@ -37,13 +37,15 @@ function build_3rdparty_cmake {
     PKG_CONF_SYSTEM=/usr/lib/x86_64-linux-gnu/pkgconfig
     PKG_CONF_INSTALL=$INSTALL/lib/pkgconfig:$INSTALL/lib/x86_64-linux-gnu/pkgconfig
     PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$PKG_CONF_SYSTEM:$PKG_CONF_INSTALL
-    env PKG_CONFIG_PATH=$PKG_CONFIG_PATH \
+    env PKG_CONFIG_PATH=$PKG_CONFIG_PATH LDFLAGS="-L$INSTALL/lib" \
     	cmake .. \
         -DCMAKE_INSTALL_PREFIX=$INSTALL \
         -DCMAKE_MODULE_PATH=$INSTALL \
-        -DCMAKE_CXX_FLAGS=-isystem\ $INSTALL/include \
-        -DCMAKE_SHARED_LINKER_FLAGS=-L$INSTALL/lib64\ -L/usr/lib64
-    make -j`nproc --all`
+        -DCMAKE_CXX_FLAGS="-isystem $INSTALL/include -L$INSTALL/lib -Wno-deprecated-declarations -Wl,-rpath-link,$INSTALL/lib" \
+        -DCMAKE_C_FLAGS="-isystem $INSTALL/include -L$INSTALL/lib -Wno-deprecated-declarations -Wl,-rpath-link,$INSTALL/lib" \
+        -DCMAKE_LD_FLAGS="-L$INSTALL/lib" \
+        -DCMAKE_LIBRARY_PATH=$INSTALL/lib
+    make VERBOSE=1 -j`nproc --all`
     sudo make install
 }
 
@@ -60,13 +62,13 @@ fi
 build_3rdparty_autogen click
 build_3rdparty_cmake lomiri-api
 build_3rdparty_cmake lomiri-app-launch
+build_3rdparty_cmake lomiri-url-dispatcher
 build_3rdparty_cmake qtmir
 
+cd $SRC_PATH
 if [ -d build ]; then
     rm -rf build
 fi
-
-cd $SRC_PATH
 mkdir build/
 cmake ..
 make -j`nproc --all`
