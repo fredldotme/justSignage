@@ -2,3 +2,19 @@
 	path = 3rdparty/qtmir
 	url = https://gitlab.com/fredldotme/qtmir
 	branch = ubports/xenial_-_edge_-_wayland_-_x11_-_multiscreen
+[submodule "3rdparty/process-cpp"]
+	path = 3rdparty/process-cpp
+	url = https://gitlab.com/ubports/core/lib-cpp/process-cpp.git
+	branch = main
+[submodule "3rdparty/properties-cpp"]
+	path = 3rdparty/properties-cpp
+	url = https://gitlab.com/ubports/core/lib-cpp/properties-cpp.git
+	branch = master
+[submodule "3rdparty/lomiri-app-launch"]
+	path = 3rdparty/lomiri-app-launch
+	url = https://gitlab.com/ubports/core/lomiri-app-launch
+	branch = ubports/xenial
+[submodule "3rdparty/click"]
+	path = 3rdparty/click
+	url = https://gitlab.com/ubports/core/click
+	branch = main
