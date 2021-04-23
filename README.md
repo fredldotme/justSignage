@@ -28,3 +28,15 @@
 * QtWebEngine (for web content support)
 * Mir (via QtMir)
 * Halium (for Android device support)
+
+### Build the source
+For first time builds please run the build script using the `-d` argument:
+```
+./build.sh -d
+```
+
+This builds the source tree including dependencies. If building dependencies is
+not requested you can simply omit `-d` from the command.
+```
+./build.sh
+```
