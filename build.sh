@@ -25,10 +25,7 @@ function build_3rdparty_autogen {
     sudo make install
 }
 
-function build_3rdparty_cmake {
-    echo "Building: $1"
-    cd $SRC_PATH
-    cd 3rdparty/$1
+function build_cmake {
     if [ -d build ]; then
         rm -rf build
     fi
@@ -49,6 +46,20 @@ function build_3rdparty_cmake {
     sudo make install
 }
 
+function build_3rdparty_cmake {
+    echo "Building: $1"
+    cd $SRC_PATH
+    cd 3rdparty/$1
+    build_cmake
+}
+
+function build_src {
+    echo "Building justSignage"
+    cd $SRC_PATH
+    cd src
+    build_cmake
+}
+
 if [ -d $INSTALL ]; then
     sudo rm -rf $INSTALL
 fi
@@ -59,17 +70,12 @@ if [ ! -f /usr/bin/apt ]; then
     build_3rdparty_cmake process-cpp
 fi
 
+# Build direct dependencies
 build_3rdparty_autogen click
 build_3rdparty_cmake lomiri-api
 build_3rdparty_cmake lomiri-app-launch
 build_3rdparty_cmake lomiri-url-dispatcher
 build_3rdparty_cmake qtmir
 
-cd $SRC_PATH
-cd src
-if [ -d build ]; then
-    rm -rf build
-fi
-mkdir build/
-cmake ..
-make -j`nproc --all`
+# Build main sources
+build_src
