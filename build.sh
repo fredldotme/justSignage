@@ -9,11 +9,30 @@ set -e
 SRC_PATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 cd $SRC_PATH
 
-if [ -f /usr/bin/apt ]; then
-    bash deps/apt.sh
-elif [ -f /usr/bin/dnf ]; then
-    bash deps/dnf.sh
-fi
+# Internal variables
+NO_CLEAN=0
+BUILD_DEPS=0
+
+# Argument parsing
+POSITIONAL=()
+while [[ $# -gt 0 ]]; do
+    key="$1"
+    case $key in
+        -n|--no-clean)
+        NO_CLEAN=1
+        shift
+        ;;
+        -d|--deps)
+        BUILD_DEPS=1
+        shift
+        ;;
+        *)
+        echo "usage: $0 [-d|--deps] [-n|--no-clean]"
+        exit 1
+        ;;
+    esac
+done
+set -- "${POSITIONAL[@]}" # restore positional parameters
 
 function build_3rdparty_autogen {
     echo "Building: $1"
@@ -26,8 +45,10 @@ function build_3rdparty_autogen {
 }
 
 function build_cmake {
-    if [ -d build ]; then
-        rm -rf build
+    if [ "$NO_CLEAN" == "0" ]; then
+        if [ -d build ]; then
+            rm -rf build
+        fi
     fi
     mkdir build
     cd build
@@ -60,22 +81,34 @@ function build_src {
     build_cmake
 }
 
-if [ -d $INSTALL ]; then
-    sudo rm -rf $INSTALL
+# Install distro-provided dependencies
+if [ -f /usr/bin/apt ]; then
+    bash deps/apt.sh
+elif [ -f /usr/bin/dnf ]; then
+    bash deps/dnf.sh
 fi
 
-# Build these deps on non-apt systems
-if [ ! -f /usr/bin/apt ]; then
-    build_3rdparty_cmake properties-cpp
-    build_3rdparty_cmake process-cpp
+if [ "$NO_CLEAN" == "0" ]; then
+    if [ -d $INSTALL ]; then
+        sudo rm -rf $INSTALL
+    fi
 fi
 
-# Build direct dependencies
-build_3rdparty_autogen click
-build_3rdparty_cmake lomiri-api
-build_3rdparty_cmake lomiri-app-launch
-build_3rdparty_cmake lomiri-url-dispatcher
-build_3rdparty_cmake qtmir
+# Build direct dependencies if requested
+if [ "$BUILD_DEPS" == "1" ]; then
+    # Build these deps on non-apt systems
+    if [ ! -f /usr/bin/apt ]; then
+        build_3rdparty_cmake properties-cpp
+        build_3rdparty_cmake process-cpp
+    fi
+
+    # Build direct dependencies
+    build_3rdparty_autogen click
+    build_3rdparty_cmake lomiri-api
+    build_3rdparty_cmake lomiri-app-launch
+    build_3rdparty_cmake lomiri-url-dispatcher
+    build_3rdparty_cmake qtmir
+fi
 
 # Build main sources
 build_src
