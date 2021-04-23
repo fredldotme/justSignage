@@ -21,3 +21,7 @@
 	path = 3rdparty/qtmir
 	url = https://gitlab.com/ubports/core/qtmir
 	branch = main
+[submodule "3rdparty/lomiri-url-dispatcher"]
+	path = 3rdparty/lomiri-url-dispatcher
+	url = https://gitlab.com/ubports/core/lomiri-url-dispatcher.git
+	branch = main
