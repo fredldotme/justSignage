@@ -19,8 +19,8 @@
 	url = https://gitlab.com/ubports/core/lomiri-api
 [submodule "3rdparty/qtmir"]
 	path = 3rdparty/qtmir
-	url = https://gitlab.com/ubports/core/qtmir
-	branch = main
+	url = https://gitlab.com/fredldotme/qtmir
+	branch = main-gl-texture
 [submodule "3rdparty/lomiri-url-dispatcher"]
 	path = 3rdparty/lomiri-url-dispatcher
 	url = https://gitlab.com/ubports/core/lomiri-url-dispatcher.git
