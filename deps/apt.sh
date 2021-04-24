@@ -4,6 +4,7 @@ sudo apt install -y \
     build-essential \
     cmake \
     cmake-extras \
+    python3-setuptools \
     google-mock \
     libgmock-dev \
     libgtest-dev \
@@ -30,13 +31,18 @@ sudo apt install -y \
     mir-renderer-gl-dev \
     libmirwayland-dev \
     libwayland-dev \
+    qtwayland5 \
     qtbase5-dev \
     qtbase5-private-dev \
     qtdeclarative5-dev \
     qtdeclarative5-private-dev \
+    qtmultimedia5-dev \
     libqt5sensors5-dev \
     libqtdbustest1-dev \
     libqtdbusmock1-dev \
+    qml-module-qtquick-controls2 \
+    qml-module-qtmultimedia \
+    libqt5multimedia5-plugins \
     libgsettings-qt-dev \
     libcurl4-openssl-dev \
     libsqlite3-dev \

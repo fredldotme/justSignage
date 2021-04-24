@@ -26,7 +26,7 @@ while [[ $# -gt 0 ]]; do
             shift
         ;;
         *)
-            echo "usage: $0 [-d|--deps] [-n|--no-clean]"
+            echo "usage: $0 [-d|--deps] [-c|--clean]"
             exit 1
         ;;
     esac
@@ -59,8 +59,8 @@ function build_cmake {
     	cmake .. \
         -DCMAKE_INSTALL_PREFIX=$INSTALL \
         -DCMAKE_MODULE_PATH=$INSTALL \
-        -DCMAKE_CXX_FLAGS="-isystem $INSTALL/include -L$INSTALL/lib -Wno-deprecated-declarations -Wl,-rpath-link,$INSTALL/lib" \
-        -DCMAKE_C_FLAGS="-isystem $INSTALL/include -L$INSTALL/lib -Wno-deprecated-declarations -Wl,-rpath-link,$INSTALL/lib" \
+        -DCMAKE_CXX_FLAGS="-isystem $INSTALL/include -isystem $INSTALL/include/qtmir -L$INSTALL/lib -Wno-deprecated-declarations -Wl,-rpath-link,$INSTALL/lib" \
+        -DCMAKE_C_FLAGS="-isystem $INSTALL/include -isystem $INSTALL/include/qtmir -L$INSTALL/lib -Wno-deprecated-declarations -Wl,-rpath-link,$INSTALL/lib" \
         -DCMAKE_LD_FLAGS="-L$INSTALL/lib" \
         -DCMAKE_LIBRARY_PATH=$INSTALL/lib
     make VERBOSE=1 -j`nproc --all`
