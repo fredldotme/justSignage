@@ -108,6 +108,7 @@ if [ "$BUILD_DEPS" == "1" ]; then
     build_3rdparty_cmake lomiri-app-launch
     build_3rdparty_cmake lomiri-url-dispatcher
     build_3rdparty_cmake qtmir
+    build_3rdparty_cmake QtAV
 fi
 
 # Build main sources

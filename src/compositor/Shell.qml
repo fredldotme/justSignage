@@ -10,6 +10,9 @@ FocusScope {
     readonly property bool stupidAnimation : true
     property color bgColor : "gray"
 
+    property int nextX : 0
+    property int nextY : 0
+
     SequentialAnimation {
         loops: Animation.Infinite
         running: stupidAnimation
@@ -44,7 +47,7 @@ FocusScope {
             delegate: MirSurfaceItem {
                 id: surfaceItem
                 surface: model.surface
-                consumesInput: true // QUESTION: why is this non-default?
+                consumesInput: true
                 x: surface.position.x
                 y: surface.position.y
                 width: surface.size.width
@@ -52,38 +55,43 @@ FocusScope {
                 focus: surface.focused
                 visible: surface.visible
 
+                function nextPoint() {
+                    var x = nextX
+                    var y = nextY
+
+                    nextX += 500
+                    if (nextX >= windowViewContainer.width) {
+                        nextX = 0
+                        nextY += 500
+                    }
+
+                    return Qt.point(x, y);
+                }
+
+                Component.onCompleted: {
+                    var point = nextPoint();
+                    x = point.x
+                    y = point.y
+                }
+
                 SequentialAnimation {
                     loops: Animation.Infinite
                     running: stupidAnimation
                     PropertyAnimation {
-                        from: 0.0
+                        from: 0.7
                         to: 1.0
-                        duration: 2000
+                        duration: 1000
                         target: surfaceItem
                         property: "scale"
                     }
                     PropertyAnimation {
-                        to: 0.0
+                        to: 0.7
                         from: 1.0
                         duration: 200
                         target: surfaceItem
                         property: "scale"
                     }
                 }
-
-                Rectangle {
-                    anchors { top: parent.bottom; right: parent.right }
-                    width: childrenRect.width
-                    height: childrenRect.height
-                    color: surface.focused ? "red" : "lightsteelblue"
-                    opacity: 0.8
-                    Text {
-                        text: surface.position.x + "," + surface.position.y + " " + surface.size.width + "x" + surface.size.height
-                        font.pixelSize: 10
-                    }
-                }
-
-                Rectangle { anchors.fill: parent; z: -1; color: "black"; opacity: 0.3 }
             }
         }
     }

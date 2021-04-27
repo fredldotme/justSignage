@@ -1,3 +1,6 @@
 project(justSignage)
 add_subdirectory(compositor)
 add_subdirectory(videoplayer)
+add_subdirectory(webplayer)
+add_subdirectory(imageplayer)
+add_subdirectory(qtavplayer)

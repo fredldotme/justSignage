@@ -17,14 +17,6 @@ Instantiator {
             value: index == 0
         }
 
-        Row {
-            x: 10
-            y: 10
-            Repeater {
-                model: Screens
-            }
-        }
-
         Shell {
             width: parent.width
             height: parent.height

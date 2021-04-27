@@ -3,6 +3,7 @@
 
 #include <QQuickWindow>
 #include <QPointer>
+#include <QDebug>
 
 #include <qtmir/screen.h>
 

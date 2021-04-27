@@ -71,10 +71,3 @@ Thumbs.db
 *.dll
 *.exe
 
-# User files
-*.user
-
-# Build directory
-build/
-src/build-src-Desktop-Debug/
-src/build-imageplayer-Desktop-Debug/

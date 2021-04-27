@@ -27,4 +27,5 @@ void ScreenWindow::setScreenWrapper(qtmir::Screen *screen)
         Q_EMIT screenWrapperChanged();
     }
     QQuickWindow::setScreen(screen->qscreen());
+    if (!isActive()) requestActivate();
 }

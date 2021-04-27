@@ -36,18 +36,24 @@ sudo apt install -y \
     qtbase5-private-dev \
     qtdeclarative5-dev \
     qtdeclarative5-private-dev \
+    qtwebengine5-dev \
     qtmultimedia5-dev \
     libqt5sensors5-dev \
     libqtdbustest1-dev \
     libqtdbusmock1-dev \
     qml-module-qtquick-controls2 \
     qml-module-qtmultimedia \
+    qml-module-qtwebengine \
     libqt5multimedia5-plugins \
     libgsettings-qt-dev \
     libcurl4-openssl-dev \
     libsqlite3-dev \
     libapparmor-dev \
     libfontconfig1-dev \
+    libavcodec-dev \
+    libavdevice-dev \
+    libavformat-dev \
+    libswresample-dev \
     gettext \
     intltool \
     valgrind
