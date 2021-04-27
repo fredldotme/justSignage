@@ -27,6 +27,7 @@ sudo apt install -y \
     libmircookie-dev \
     libmirrenderer-dev \
     libmiral-dev \
+    libmircore-dev \
     mirtest-dev \
     mir-renderer-gl-dev \
     libmirwayland-dev \
