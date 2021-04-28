@@ -51,6 +51,26 @@ public:
     {
         return qtmir::WindowManagementPolicy::handle_keyboard_event(event);
     }
+
+    void advise_new_window(const miral::WindowInfo &windowInfo) override
+    {
+        qDebug() << Q_FUNC_INFO;
+
+        qtmir::WindowManagementPolicy::advise_new_window(windowInfo);
+    }
+
+    void advise_adding_to_workspace(const std::shared_ptr<miral::Workspace> &workspace,
+                                    const std::vector<miral::Window> &windows) override
+    {
+        qDebug() << Q_FUNC_INFO;
+        qtmir::WindowManagementPolicy::advise_adding_to_workspace(workspace, windows);
+    }
+
+    void advise_output_create(miral::Output const& output)
+    {
+        qDebug() << Q_FUNC_INFO;
+        qtmir::WindowManagementPolicy::advise_output_create(output);
+    }
 };
 
 struct DemoDisplayConfigurationStorage : miral::DisplayConfigurationStorage
@@ -125,7 +145,7 @@ struct DemoSessionAuthorizer : qtmir::SessionAuthorizer
     bool connectionIsAllowed(miral::ApplicationCredentials const& creds) override
     {
         qDebug() << "OVERRIDE qtmir::SessionAuthorizer::connectionIsAllowed";
-        return qtmir::SessionAuthorizer::connectionIsAllowed(creds);
+        return true;
     }
     bool configureDisplayIsAllowed(miral::ApplicationCredentials const& creds) override
     {

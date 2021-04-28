@@ -12,6 +12,6 @@ Window {
 
     WebEngineView {
         anchors.fill: parent
-        url: "https://fredl.me"
+        url: ""
     }
 }

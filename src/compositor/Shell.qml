@@ -59,10 +59,10 @@ FocusScope {
                     var x = nextX
                     var y = nextY
 
-                    nextX += 500
+                    nextX += 400
                     if (nextX >= windowViewContainer.width) {
                         nextX = 0
-                        nextY += 500
+                        nextY += 400
                     }
 
                     return Qt.point(x, y);
@@ -94,14 +94,6 @@ FocusScope {
                 }
             }
         }
-    }
-
-    Button {
-        anchors { right: parent.right; top: parent.top }
-        height: 30
-        width: 80
-        text: "Quit"
-        onClicked: Qt.quit()
     }
 
     Text {

@@ -16,8 +16,9 @@ Window {
 
     MediaPlayer {
         id: player
-        source: "file:///home/alfred/Videos/NeverGonnaGiveYouUp4K.mp4"
+        source: ""
         autoLoad: true
         autoPlay: true
+        muted: true
     }
 }

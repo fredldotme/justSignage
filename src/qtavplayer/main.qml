@@ -19,14 +19,11 @@ Window {
 
     MediaPlayer {
         id: player
-        source: "file:///home/alfred/Videos/dancer1.webm"
-        autoLoad: true
-        autoPlay: true
-        videoFilters: [chromaKeyFilter]
+        source: ""
+        loops: MediaPlayer.Infinite
     }
 
-    VideoFilter {
-        id: chromaKeyFilter
-        avfilter: "chromakey=0x818081:0.1:0.2:1"
+    Component.onCompleted: {
+        player.play()
     }
 }

@@ -11,6 +11,6 @@ Window {
 
     Image {
         anchors.fill: parent
-        source: "file:///home/alfred/Bilder/Sat1.png"
+        source: ""
     }
 }

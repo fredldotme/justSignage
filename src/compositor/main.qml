@@ -1,26 +1,37 @@
 import QtQuick 2.5
 import QtMir 0.1
+import QtQuick.Controls 2.0
 
-Instantiator {
-    id: root
+Item {
+    Instantiator {
+        id: root
 
-    model: Screens
+        model: Screens
 
-    ScreenWindow {
-        id: window
-        visible: true
-        screen: model.screen
+        ScreenWindow {
+            id: window
+            visible: true
+            screen: model.screen
 
-        Binding {
-            target: model.screen
-            property: "active"
-            value: index == 0
-        }
+            Shell {
+                id: shell
+                anchors.fill: parent
+            }
 
-        Shell {
-            width: parent.width
-            height: parent.height
-            z: 1
+            Rectangle {
+                x: (parent.width - 16) / 2
+                y: 0
+                width: 16
+                height: parent.height
+                color: "black"
+            }
+
+            Button {
+                text: "Quit"
+                anchors.left: parent.left
+                anchors.top: parent.top
+                onClicked: Qt.quit()
+            }
         }
     }
 }
