@@ -78,4 +78,5 @@ Thumbs.db
 build/
 src/build-src-Desktop-Debug/
 src/build-imageplayer-Desktop-Debug/
+src/build-qtavplayer-Desktop-Debug/
 build-src-Desktop-Debug/
