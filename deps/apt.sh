@@ -4,6 +4,7 @@ sudo apt install -y \
     build-essential \
     cmake \
     cmake-extras \
+    python3-chardet \
     python3-setuptools \
     google-mock \
     libgmock-dev \
