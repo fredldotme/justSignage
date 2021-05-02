@@ -40,7 +40,7 @@ parts:
     source-type: local
     source: ./
     plugin: dump
-    override-build: ./build.sh -d -c
+    override-build: ./build.sh -d
     stage-packages:
       - libaom0
       - libasn1-8-heimdal
