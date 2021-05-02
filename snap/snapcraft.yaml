@@ -10,9 +10,6 @@ architectures:
   - build-on: amd64
     run-on: amd64
 
-  - build-on: i386
-    run-on: i386
-
   - build-on: armhf
     run-on: armhf
 
@@ -22,9 +19,9 @@ architectures:
 apps:
   justsignage-compositor:
     environment:
-      QT_PLUGIN_PATH: ${SNAP}/usr/lib/${SNAPCRAFT_ARCH_TRIPLET}/qt5/plugins:${SNAP}/opt/justSignage/lib/qt5/plugins
-      PATH: ${SNAP}/opt/justSignage/bin:${PATH}
-    command: desktop-launch ${SNAP}/opt/justSignage/bin/justsignage-compositor
+      QT_PLUGIN_PATH: ${SNAP}/usr/lib/${SNAPCRAFT_ARCH_TRIPLET}/qt5/plugins:${SNAP}/opt/justSignage-${SNAPCRAFT_PROJECT_VERSION}/lib/qt5/plugins
+      PATH: ${SNAP}/opt/justSignage-${SNAPCRAFT_PROJECT_VERSION}/bin:${PATH}
+    command: desktop-launch $SNAP/opt/justSignage-$SNAPCRAFT_PROJECT_VERSION/bin/justsignage-compositor
     plugs: [ x11, wayland, desktop, desktop-legacy, opengl, alsa, pulseaudio ]
 
 parts:
