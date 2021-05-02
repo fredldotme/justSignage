@@ -20,6 +20,8 @@ apps:
   justsignage-compositor:
     environment:
       QT_PLUGIN_PATH: ${SNAP}/usr/lib/${SNAPCRAFT_ARCH_TRIPLET}/qt5/plugins:${SNAP}/opt/justSignage/lib/qt5/plugins
+      QT_QPA_PLATFORM: mirserver
+      MIR_SERVER_CURSOR: null
       PATH: ${SNAP}/opt/justSignage/bin:${PATH}
     command: desktop-launch $SNAP/opt/justSignage/bin/justsignage-compositor
     plugs: [ x11, wayland, desktop, desktop-legacy, opengl, alsa, pulseaudio ]
