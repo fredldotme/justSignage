@@ -91,12 +91,6 @@ elif [ -f /usr/bin/dnf ]; then
     bash deps/dnf.sh
 fi
 
-if [ "$CLEAN" == "1" ]; then
-    if [ -d $INSTALL ]; then
-        sudo rm -rf $INSTALL
-    fi
-fi
-
 # Build direct dependencies if requested
 if [ "$BUILD_DEPS" == "1" ]; then
     # Build these deps on non-apt systems
