@@ -24,7 +24,7 @@ apps:
       QT_QPA_PLATFORM: mirserver
       MIR_SERVER_CURSOR: "null"
       PATH: ${SNAP}/opt/justSignage/bin:${PATH}
-    command: desktop-launch $SNAP/opt/justSignage/bin/justsignage-compositor
+    command: desktop-launch opt/justSignage/bin/justsignage-compositor
     plugs: [ x11, wayland, desktop, desktop-legacy, opengl, alsa, pulseaudio ]
 
 parts:
