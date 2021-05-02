@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 
-project(src LANGUAGES CXX)
+project(justsignage-compositor LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -53,25 +53,25 @@ set(PROJECT_SOURCES
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(src
+    qt_add_executable(justsignage-compositor
         ${PROJECT_SOURCES}
     )
 else()
     if(ANDROID)
-        add_library(src SHARED
+        add_library(justsignage-compositor SHARED
             ${PROJECT_SOURCES}
         )
     else()
-        add_executable(src
+        add_executable(justsignage-compositor
           ${PROJECT_SOURCES}
         )
     endif()
 endif()
 
-target_compile_definitions(src
+target_compile_definitions(justsignage-compositor
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 target_link_libraries(
-    src
+    justsignage-compositor
 
     PRIVATE Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::Quick
@@ -79,3 +79,5 @@ target_link_libraries(
     ${QTMIRSERVER_LDFLAGS}
     ${MIRAL_LDFLAGS}
 )
+
+install(TARGETS justsignage-compositor DESTINATION bin)
