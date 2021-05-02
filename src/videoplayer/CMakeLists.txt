@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(videoplayer LANGUAGES CXX)
+project(justsignage-videoplayer LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -27,18 +27,18 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt5 COMPONENTS Core Quick Multimedia REQUIRED)
 
 if(ANDROID)
-    add_library(videoplayer SHARED
+    add_library(justsignage-videoplayer SHARED
       main.cpp
       qml.qrc
     )
 else()
-    add_executable(videoplayer
+    add_executable(justsignage-videoplayer
       main.cpp
       qml.qrc
     )
 endif()
 
-target_compile_definitions(videoplayer
+target_compile_definitions(justsignage-videoplayer
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
-target_link_libraries(videoplayer
+target_link_libraries(justsignage-videoplayer
   PRIVATE Qt5::Core Qt5::Quick Qt5::Multimedia)
