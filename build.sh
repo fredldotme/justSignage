@@ -1,13 +1,11 @@
 #/bin/bash
 
-PROJECT=justSignage
-VERSION=0.0.0-rc0
-INSTALL=/opt/${PROJECT}-${VERSION}
-
 set -e
 
 SRC_PATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 cd $SRC_PATH
+
+source common.sh
 
 # Internal variables
 CLEAN=0
@@ -52,8 +50,13 @@ function build_cmake {
         mkdir build
     fi
     cd build
-    PKG_CONF_SYSTEM=/usr/lib/x86_64-linux-gnu/pkgconfig
-    PKG_CONF_INSTALL=$INSTALL/lib/pkgconfig:$INSTALL/lib/x86_64-linux-gnu/pkgconfig
+    if [ -f /usr/bin/dpkg-architecture ]; then
+        MULTIARCH=$(/usr/bin/dpkg-architecture -qDEB_TARGET_MULTIARCH)
+    else
+        MULTIARCH=""
+    fi
+    PKG_CONF_SYSTEM=/usr/lib/$MULTIARCH/pkgconfig
+    PKG_CONF_INSTALL=$INSTALL/lib/pkgconfig:$INSTALL/lib/$MULTIARCH/pkgconfig
     PKG_CONFIG_PATH=$PKG_CONFIG_PATH:$PKG_CONF_SYSTEM:$PKG_CONF_INSTALL
     env PKG_CONFIG_PATH=$PKG_CONFIG_PATH LDFLAGS="-L$INSTALL/lib" \
     	cmake .. \

@@ -39,6 +39,7 @@ sudo apt install -y \
     qtdeclarative5-private-dev \
     qtwebengine5-dev \
     qtmultimedia5-dev \
+    libqt5opengl5-dev \
     libqt5sensors5-dev \
     libqtdbustest1-dev \
     libqtdbusmock1-dev \
@@ -57,4 +58,5 @@ sudo apt install -y \
     libswresample-dev \
     gettext \
     intltool \
+    libtool \
     valgrind
