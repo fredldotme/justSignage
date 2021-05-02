@@ -19,9 +19,9 @@ architectures:
 apps:
   justsignage-compositor:
     environment:
-      QT_PLUGIN_PATH: ${SNAP}/usr/lib/${SNAPCRAFT_ARCH_TRIPLET}/qt5/plugins:${SNAP}/opt/justSignage-${SNAPCRAFT_PROJECT_VERSION}/lib/qt5/plugins
-      PATH: ${SNAP}/opt/justSignage-${SNAPCRAFT_PROJECT_VERSION}/bin:${PATH}
-    command: desktop-launch $SNAP/opt/justSignage-$SNAPCRAFT_PROJECT_VERSION/bin/justsignage-compositor
+      QT_PLUGIN_PATH: ${SNAP}/usr/lib/${SNAPCRAFT_ARCH_TRIPLET}/qt5/plugins:${SNAP}/opt/justSignage/lib/qt5/plugins
+      PATH: ${SNAP}/opt/justSignage/bin:${PATH}
+    command: desktop-launch $SNAP/opt/justSignage/bin/justsignage-compositor
     plugs: [ x11, wayland, desktop, desktop-legacy, opengl, alsa, pulseaudio ]
 
 parts:
