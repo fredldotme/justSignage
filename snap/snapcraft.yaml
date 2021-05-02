@@ -19,8 +19,8 @@ architectures:
 apps:
   justsignage-compositor:
     environment:
-      QT_PLUGIN_PATH: ${SNAP}/usr/lib/${SNAPCRAFT_ARCH_TRIPLET}/qt5/plugins:${SNAP}/usr/lib/qt5/plugins
-      QT_QPA_PLATFORM_PLUGIN_PATH: ${SNAP}/usr/lib/qt5/plugins/platforms
+      QT_PLUGIN_PATH: ${SNAP}/usr/lib/${SNAPCRAFT_ARCH_TRIPLET}/qt5/plugins:${SNAP}/lib/qt5/plugins
+      QT_QPA_PLATFORM_PLUGIN_PATH: ${SNAP}/lib/qt5/plugins/platforms
       QT_QPA_PLATFORM: mirserver
       MIR_SERVER_CURSOR: "null"
     command: desktop-launch justsignage-compositor
@@ -238,8 +238,6 @@ parts:
       - libzmq5
       - libzvbi0
       - ocl-icd-libopencl1
-    organize:
-      usr: usr/
     after: [ desktop-qt5 ]
   desktop-qt5:
     build-packages:
