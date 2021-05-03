@@ -19,12 +19,15 @@ architectures:
 apps:
   justsignage-compositor:
     environment:
-      QT_PLUGIN_PATH: ${SNAP}/usr/lib/${SNAPCRAFT_ARCH_TRIPLET}/qt5/plugins:${SNAP}/lib/qt5/plugins
-      QT_QPA_PLATFORM_PLUGIN_PATH: ${SNAP}/lib/qt5/plugins/platforms
+      LD_LIBRARY_PATH: $(SNAP)/usr/lib/${SNAPCRAFT_ARCH_TRIPLET}:${SNAP}/opt/justSignage/lib:${SNAP}/opt/justSignage/lib/${SNAPCRAFT_ARCH_TRIPLET}
+      QT_PLUGIN_PATH: ${SNAP}/usr/lib/${SNAPCRAFT_ARCH_TRIPLET}/qt5/plugins:${SNAP}/opt/justSignage/lib/qt5/plugins
+      QT_QPA_PLATFORM_PLUGIN_PATH: ${SNAP}/opt/justSignage/lib/qt5/plugins/platforms
       QT_QPA_PLATFORM: mirserver
+      QML2_IMPORT_PATH: ${SNAP}/usr/lib/${SNAPCRAFT_ARCH_TRIPLET}/qt5/qml:${SNAP}/opt/justSignage/lib/qt5/qml
       MIR_SERVER_CURSOR: "null"
-    command: desktop-launch justsignage-compositor
-    plugs: [ x11, wayland, desktop, desktop-legacy, opengl, alsa, pulseaudio ]
+      MIR_SERVER_PLATFORM_PATH: ${SNAP}/usr/lib/${SNAPCRAFT_ARCH_TRIPLET}/mir/server-platform
+    command: opt/justSignage/bin/justsignage-compositor
+    plugs: [ x11, wayland, desktop, desktop-legacy, opengl, alsa, pulseaudio, login-session-control ]
 
 parts:
   common-info:
@@ -40,7 +43,7 @@ parts:
     source-type: local
     source: ./
     plugin: dump
-    override-build: ./build.sh -d
+    override-build: ./build.sh -d -c
     stage-packages:
       - libaom0
       - libasn1-8-heimdal
@@ -86,6 +89,7 @@ parts:
       - libgee-0.8-2
       - libgl1
       - libgles2
+      - libglu1-mesa
       - libglvnd0
       - libglx0
       - libgme0
@@ -237,27 +241,7 @@ parts:
       - libzeitgeist-2.0-0
       - libzmq5
       - libzvbi0
+      - mir-platform-graphics-mesa-kms16
+      - mir-platform-graphics-mesa-x16
+      - mir-platform-input-evdev7
       - ocl-icd-libopencl1
-    after: [ desktop-qt5 ]
-  desktop-qt5:
-    build-packages:
-      - qtbase5-dev
-      - dpkg-dev
-    make-parameters:
-      - FLAVOR=qt5
-    plugin: make
-    source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
-    source-subdir: qt
-    stage-packages:
-      - libxkbcommon0
-      - ttf-ubuntu-font-family
-      - dmz-cursor-theme
-      - light-themes
-      - adwaita-icon-theme
-      - gnome-themes-standard
-      - shared-mime-info
-      - libqt5gui5
-      - libgdk-pixbuf2.0-0
-      - libqt5svg5
-      - locales-all
-      - xdg-user-dirs

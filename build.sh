@@ -7,6 +7,12 @@ cd $SRC_PATH
 
 source common.sh
 
+if [ "$SNAPCRAFT_PART_INSTALL" != "" ]; then
+    INSTALL=$SNAPCRAFT_PART_INSTALL/opt/${PROJECT}
+else
+    INSTALL=/opt/${PROJECT}-${VERSION}
+fi
+
 # Internal variables
 CLEAN=0
 BUILD_DEPS=0

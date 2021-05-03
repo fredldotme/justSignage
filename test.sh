@@ -5,17 +5,19 @@ cd $SRC_PATH
 
 source common.sh
 
+INSTALL=/opt/${PROJECT}-${VERSION}
+
 export LD_LIBRARY_PATH=$INSTALL/lib
 export QML2_IMPORT_PATH=$INSTALL/lib/qml:$INSTALL/lib/qt5/qml
 export QT_QPA_PLATFORM_PLUGIN_PATH=$INSTALL/lib/qt5/plugins/platforms
 
-sudo glib-compile-schemas /opt/justSignage-0.0.0-rc0/share/glib-2.0/schemas
+sudo glib-compile-schemas $INSTALL/share/glib-2.0/schemas
 env \
     MIR_SERVER_X11_OUTPUT=800x1200:800x1200 \
-    GSETTINGS_SCHEMA_DIR=/opt/justSignage-0.0.0-rc0/share/glib-2.0/schemas \
+    GSETTINGS_SCHEMA_DIR=$INSTALL/share/glib-2.0/schemas \
     QT_QPA_PLATFORM=mirserver \
     MIR_SERVER_CURSOR=null \
-    src/build/compositor/compositor &
+    src/build/compositor/justsignage-compositor &
 
 sleep 3
 
