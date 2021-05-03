@@ -1,5 +1,5 @@
 name: justsignage
-adopt-info: common-info
+adopt-info: justsignage
 summary: Base technologies for immersive digital signage purposes
 description: |
   justSignage provides components to create beautiful digital signage experiences
@@ -30,7 +30,7 @@ apps:
     plugs: [ x11, wayland, desktop, desktop-legacy, opengl, alsa, pulseaudio, login-session-control ]
 
 parts:
-  common-info:
+  justsignage:
     source-type: local
     source: ./
     plugin: dump
@@ -39,11 +39,10 @@ parts:
       source ./common.sh
       snapcraftctl set-version "$VERSION"
       snapcraftctl set-grade "stable"
-  justsignage:
-    source-type: local
-    source: ./
-    plugin: dump
     override-build: ./build.sh -d -c
+    organize:
+      usr: usr/
+      opt: opt/
     stage-packages:
       - libaom0
       - libasn1-8-heimdal
