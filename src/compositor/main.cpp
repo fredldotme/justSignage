@@ -2,6 +2,10 @@
 #include <QQmlApplicationEngine>
 #include <QJsonObject>
 #include <QJsonDocument>
+#include <QDir>
+#include <QDebug>
+
+#include <sys/stat.h>
 
 #include <qtmir/mirserverapplication.h>
 #include <qtmir/displayconfigurationpolicy.h>
@@ -171,6 +175,18 @@ struct DemoSessionAuthorizer : qtmir::SessionAuthorizer
 
 int main(int argc, char *argv[])
 {
+    {
+        QByteArray xdgRuntimePath = qgetenv("XDG_RUNTIME_DIR");
+        QDir xdgRuntimeDir(xdgRuntimePath);
+        if (!xdgRuntimeDir.exists()) {
+            xdgRuntimeDir.mkpath(QString::fromUtf8(xdgRuntimePath));
+            if (chmod(xdgRuntimePath.data(), 0700)) {
+                qInfo() << "Failed to set permissions on" << xdgRuntimePath;
+                return 1;
+            }
+        }
+    }
+
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
