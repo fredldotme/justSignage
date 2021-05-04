@@ -28,7 +28,8 @@ apps:
       MIR_SERVER_CURSOR: "null"
       MIR_SERVER_PLATFORM_PATH: ${SNAP}/usr/lib/${SNAPCRAFT_ARCH_TRIPLET}/mir/server-platform
     command: bin/desktop-launch $SNAP/opt/justSignage/bin/justsignage-compositor
-    plugs: [ x11, wayland, opengl, alsa, pulseaudio, login-session-control ]
+    plugs: [ x11, opengl, alsa, pulseaudio, login-session-control ]
+    slots: [ wayland ]
 
 parts:
   desktop-qt5:
