@@ -266,3 +266,6 @@ parts:
       - mir-graphics-drivers-desktop
       - mir-platform-input-evdev7
       - ocl-icd-libopencl1
+      - qml-module-qtquick-controls2
+      - qml-module-qtquick-window2
+      - qml-module-qtwebengine
