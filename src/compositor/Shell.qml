@@ -7,11 +7,18 @@ FocusScope {
     id: root
     focus: true
 
-    readonly property bool stupidAnimation : true
+    property bool stupidAnimation : true
     property color bgColor : "gray"
 
     property int nextX : 0
     property int nextY : 0
+
+    property int canvasWidth : 0
+    onCanvasWidthChanged: console.log("SERS: " + canvasWidth)
+    property int canvasHeight : 0
+    onCanvasHeightChanged: console.log("SERS: " + canvasHeight)
+
+    property QtObject screen : null
 
     SequentialAnimation {
         loops: Animation.Infinite
@@ -48,8 +55,8 @@ FocusScope {
                 id: surfaceItem
                 surface: model.surface
                 consumesInput: true
-                x: surface.position.x
-                y: surface.position.y
+                x: surface.position.x - root.screen.position.x
+                y: surface.position.y - root.screen.position.y
                 width: surface.size.width
                 height: surface.size.height
                 focus: surface.focused
@@ -59,10 +66,10 @@ FocusScope {
                     var x = nextX
                     var y = nextY
 
-                    nextX += 400
-                    if (nextX >= windowViewContainer.width) {
+                    nextX += surfaceItem.width
+                    if (nextX >= root.canvasWidth) {
                         nextX = 0
-                        nextY += 400
+                        nextY += surfaceItem.height
                     }
 
                     return Qt.point(x, y);
@@ -70,8 +77,8 @@ FocusScope {
 
                 Component.onCompleted: {
                     var point = nextPoint();
-                    x = point.x
-                    y = point.y
+                    x = point.x - root.screen.position.x
+                    y = point.y - root.screen.position.y
                 }
 
                 SequentialAnimation {
@@ -106,8 +113,8 @@ FocusScope {
         color: "black"
         width: 6
         height: 10
-        x: PointerPosition.x // - window.screen.position.x
-        y: PointerPosition.y // - window.screen.position.y
+        x: PointerPosition.x - root.screen.position.x
+        y: PointerPosition.y - root.screen.position.y
     }
 
     MouseArea {

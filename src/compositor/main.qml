@@ -8,6 +8,9 @@ Item {
 
         model: Screens
 
+        property int canvasWidth : 0
+        property int canvasHeight : 0
+
         ScreenWindow {
             id: window
             visible: true
@@ -15,15 +18,21 @@ Item {
 
             Shell {
                 id: shell
+                screen: model.screen
+                canvasWidth: root.canvasWidth
+                canvasHeight: root.canvasHeight
                 anchors.fill: parent
-            }
+                stupidAnimation: false
 
-            Rectangle {
-                x: (parent.width - 16) / 2
-                y: 0
-                width: 16
-                height: parent.height
-                color: "black"
+                Component.onCompleted: {
+                    var newWidth = screen.position.x + screen.physicalSize.width
+                    if (newWidth > root.canvasWidth)
+                        root.canvasWidth = newWidth
+
+                    var newHeight = screen.position.y + screen.physicalSize.height
+                    if (newHeight > root.canvasHeight)
+                        root.canvasHeight = newHeight
+                }
             }
 
             Button {
