@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(webplayer LANGUAGES CXX)
+project(justsignage-webplayer LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -24,21 +24,24 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #    endif()
 #endif()
 
-find_package(Qt5 COMPONENTS Core Quick WebEngine REQUIRED)
+find_package(Qt5 COMPONENTS Core DBus Quick WebEngine WebChannel REQUIRED)
 
 if(ANDROID)
-    add_library(webplayer SHARED
+    add_library(justsignage-webplayer SHARED
       main.cpp
+      compositorctrl.cpp
       qml.qrc
     )
 else()
-    add_executable(webplayer
+    add_executable(justsignage-webplayer
       main.cpp
+      compositorctrl.cpp
       qml.qrc
     )
 endif()
 
-target_compile_definitions(webplayer
+target_compile_definitions(justsignage-webplayer
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
-target_link_libraries(webplayer
-  PRIVATE Qt5::Core Qt5::Quick Qt5::WebEngine)
+target_link_libraries(justsignage-webplayer
+  PRIVATE Qt5::Core Qt5::DBus Qt5::Quick Qt5::WebEngine Qt5::WebChannel)
+install(TARGETS justsignage-webplayer DESTINATION bin)

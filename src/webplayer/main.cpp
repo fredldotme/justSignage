@@ -2,9 +2,13 @@
 #include <QQmlApplicationEngine>
 #include <QtWebEngine/QtWebEngine>
 
+#include "compositorctrl.h"
+
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+
+    qmlRegisterType<CompositorCtrl>("justSignage", 1, 0, "CompositorCtrl");
 
     QGuiApplication app(argc, argv);
 

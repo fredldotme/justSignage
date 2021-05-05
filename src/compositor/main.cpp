@@ -1,8 +1,10 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QDir>
+#include <QtDBus/QDBusConnection>
 #include <QDebug>
 
 #include <sys/stat.h>
@@ -17,6 +19,7 @@
 #include "screens.h"
 #include "screenwindow.h"
 #include "pointerposition.h"
+#include "dbusinterface.h"
 
 inline QString stringFromEdid(const miral::Edid& edid)
 {
@@ -187,6 +190,17 @@ int main(int argc, char *argv[])
         }
     }
 
+    DBusInterface dbusInterface;
+
+    if(!QDBusConnection::sessionBus().registerService("io.justsignage.compositor") ||
+            !QDBusConnection::sessionBus().registerObject("/io/justsignage/compositor", &dbusInterface,
+                                                          QDBusConnection::ExportAllSlots |
+                                                          QDBusConnection::ExportAllProperties |
+                                                          QDBusConnection::ExportAllSignals)) {
+        return 2;
+    }
+
+
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
@@ -219,6 +233,7 @@ int main(int argc, char *argv[])
         if (!obj && url == objUrl)
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
+    engine.rootContext()->setContextProperty("dbusInterface", &dbusInterface);
     engine.load(url);
 
     const int result = application->exec();

@@ -1,6 +1,7 @@
-import QtQuick 2.5
+import QtQuick 2.12
 import QtMir 0.1
 import QtQuick.Controls 2.0
+import Unity.Application 0.1
 
 Item {
     Instantiator {
@@ -11,6 +12,8 @@ Item {
         property int canvasWidth : 0
         property int canvasHeight : 0
 
+        property var windowModel : WindowModel {}
+
         ScreenWindow {
             id: window
             visible: true
@@ -19,6 +22,7 @@ Item {
             Shell {
                 id: shell
                 screen: model.screen
+                windowModel: root.windowModel
                 canvasWidth: root.canvasWidth
                 canvasHeight: root.canvasHeight
                 anchors.fill: parent

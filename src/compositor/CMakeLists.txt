@@ -25,7 +25,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #endif()
 
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Quick REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core DBus Quick REQUIRED)
 
 include(FindPkgConfig)
 pkg_check_modules(MIRSERVER mirserver>=0.26 REQUIRED)
@@ -46,6 +46,7 @@ include_directories(
 
 set(PROJECT_SOURCES
     main.cpp
+    dbusinterface.cpp
     screens.cpp
     screenwindow.cpp
     pointerposition.cpp
@@ -75,6 +76,7 @@ target_link_libraries(
 
     PRIVATE Qt${QT_VERSION_MAJOR}::Core
     Qt${QT_VERSION_MAJOR}::Quick
+    Qt${QT_VERSION_MAJOR}::DBus
 
     ${QTMIRSERVER_LDFLAGS}
     ${MIRAL_LDFLAGS}
