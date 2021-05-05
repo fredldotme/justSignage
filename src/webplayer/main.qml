@@ -6,8 +6,8 @@ import justSignage 1.0
 
 Window {
     visible: true
-    width: 800
-    height: 600
+    width: 400
+    height: 300
     title: qsTr("Hello World")
     flags: Qt.ToolTip | Qt.FramelessWindowHint | Qt.WA_TranslucentBackground
     color: "#00000000"
