@@ -27,9 +27,9 @@ sleep 3
 QT_QPA_PLATFORM=wayland $INSTALL/bin/justsignage-webplayer &
 QT_QPA_PLATFORM=wayland $INSTALL/bin/justsignage-webplayer &
 QT_QPA_PLATFORM=wayland $INSTALL/bin/justsignage-webplayer &
-#QT_QPA_PLATFORM=wayland ./src/build/videoplayer/videoplayer &
+QT_QPA_PLATFORM=wayland $INSTALL/bin/justsignage-videoplayer &
 #QT_QPA_PLATFORM=wayland ./src/build/qtavplayer/qtavplayer &
-#mpv --geometry=2400x1400 --gpu-context=wayland '/home/alfred/Videos/4k.mkv'
+#mpv --geometry=800x600 --gpu-context=wayland --mute=yes '/home/alfred/Videos/4k.mkv' &
 
 for job in `jobs -p`; do
     wait $job
