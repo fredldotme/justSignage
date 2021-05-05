@@ -29,13 +29,13 @@ find_package(Qt5 COMPONENTS Core DBus Quick WebEngine WebChannel REQUIRED)
 if(ANDROID)
     add_library(justsignage-webplayer SHARED
       main.cpp
-      compositorctrl.cpp
+      remotectrl.cpp
       qml.qrc
     )
 else()
     add_executable(justsignage-webplayer
       main.cpp
-      compositorctrl.cpp
+      remotectrl.cpp
       qml.qrc
     )
 endif()

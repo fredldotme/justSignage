@@ -2,13 +2,13 @@
 #include <QQmlApplicationEngine>
 #include <QtWebEngine/QtWebEngine>
 
-#include "compositorctrl.h"
+#include "remotectrl.h"
 
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
-    qmlRegisterType<CompositorCtrl>("justSignage", 1, 0, "CompositorCtrl");
+    qmlRegisterType<RemoteCtrl>("justSignage", 1, 0, "RemoteCtrl");
 
     QGuiApplication app(argc, argv);
 

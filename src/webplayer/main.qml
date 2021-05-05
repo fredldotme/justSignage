@@ -16,14 +16,14 @@ Window {
         "<script type=\"text/javascript\" src=\"qrc:///qtwebchannel/qwebchannel.js\"></script>
 
         <script type=\"text/javascript\">
-            var compositorCtrl;
+            var remoteCtrl;
 
             window.onload = function()
             {
                 new QWebChannel(qt.webChannelTransport, function(channel) {
                     // all published objects are available in channel.objects under
                     // the identifier set in their attached WebChannel.id property
-                    compositorCtrl = channel.objects.compositorCtrl;
+                    remoteCtrl = channel.objects.remoteCtrl;
                 });
             }
         </script>
@@ -45,7 +45,8 @@ Window {
         </style>
         <div class=\"container\">
             <div class=\"center\">
-                <button type=\"button\" onclick=\"compositorCtrl.shuffle()\">Shuffle!</button>
+                <button type=\"button\" onclick=\"remoteCtrl.nextVideo()\">Next video</button>
+                <button type=\"button\" onclick=\"remoteCtrl.shuffle()\">Shuffle!</button>
             </div>
         </div>
     "
@@ -54,14 +55,14 @@ Window {
         webEngineView.loadHtml(controller)
     }
 
-    CompositorCtrl {
-        id: compositorCtrl
-        WebChannel.id: "compositorCtrl"
+    RemoteCtrl {
+        id: remoteCtrl
+        WebChannel.id: "remoteCtrl"
     }
 
     WebChannel {
         id: webChannel
-        registeredObjects: [ compositorCtrl ]
+        registeredObjects: [ remoteCtrl ]
     }
 
     WebEngineView {
