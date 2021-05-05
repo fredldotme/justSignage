@@ -69,9 +69,7 @@ FocusScope {
                 property int posX : 0
                 property int posY : 0
                 property int nextShuffleX : 0
-                onNextShuffleXChanged: console.log(nextShuffleX)
                 property int nextShuffleY : 0
-                onNextShuffleYChanged: console.log(nextShuffleY)
 
                 function getRandomInt(max) {
                     return Math.floor(Math.random() * max);
@@ -79,7 +77,7 @@ FocusScope {
 
                 function recalculateNextShuffle() {
                     var maxX = canvasWidth - surface.size.width
-                    var maxY = canvasHeight - surface.size.width
+                    var maxY = canvasHeight - surface.size.height
                     nextShuffleX = Math.abs(getRandomInt(maxX));
                     nextShuffleY = Math.abs(getRandomInt(maxY));
                 }
