@@ -29,11 +29,11 @@ Item {
                 stupidAnimation: false
 
                 Component.onCompleted: {
-                    var newWidth = screen.position.x + screen.physicalSize.width
+                    var newWidth = screen.position.x + shell.width
                     if (newWidth > root.canvasWidth)
                         root.canvasWidth = newWidth
 
-                    var newHeight = screen.position.y + screen.physicalSize.height
+                    var newHeight = screen.position.y + shell.height
                     if (newHeight > root.canvasHeight)
                         root.canvasHeight = newHeight
                 }
