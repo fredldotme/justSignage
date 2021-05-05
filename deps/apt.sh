@@ -46,6 +46,7 @@ sudo apt install -y \
     libqtdbusmock1-dev \
     qml-module-qtquick-controls2 \
     qml-module-qtmultimedia \
+    qml-module-qtwebchannel \
     qml-module-qtwebengine \
     libqt5multimedia5-plugins \
     libgsettings-qt-dev \
