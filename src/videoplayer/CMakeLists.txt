@@ -24,16 +24,18 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 #    endif()
 #endif()
 
-find_package(Qt5 COMPONENTS Core Quick Multimedia REQUIRED)
+find_package(Qt5 COMPONENTS Core DBus Quick Multimedia REQUIRED)
 
 if(ANDROID)
     add_library(justsignage-videoplayer SHARED
       main.cpp
+      videoctrl.cpp
       qml.qrc
     )
 else()
     add_executable(justsignage-videoplayer
       main.cpp
+      videoctrl.cpp
       qml.qrc
     )
 endif()
@@ -41,4 +43,5 @@ endif()
 target_compile_definitions(justsignage-videoplayer
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 target_link_libraries(justsignage-videoplayer
-  PRIVATE Qt5::Core Qt5::Quick Qt5::Multimedia)
+  PRIVATE Qt5::Core Qt5::DBus Qt5::Quick Qt5::Multimedia)
+install(TARGETS justsignage-videoplayer DESTINATION bin)

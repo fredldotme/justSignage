@@ -8,6 +8,17 @@ Window {
     height: 480
     flags: Qt.ToolTip | Qt.FramelessWindowHint | Qt.WA_TranslucentBackground
     color: "#00000000"
+    property int counter : 0
+    property var playList : [
+        "file:///home/alfred/Videos/caminandes_llamigos_1080p_hevc.mp4",
+        "file:///home/alfred/Videos/Nextcloud.mp4",
+        "file:///home/alfred/Videos/realisticdragon.mp4"
+    ]
+
+    Connections {
+        target: videoCtrl
+        onNextVideoTriggered: counter++
+    }
 
     VideoOutput {
         anchors.fill: parent
@@ -16,7 +27,7 @@ Window {
 
     MediaPlayer {
         id: player
-        source: ""
+        source: playList[counter % playList.length]
         autoLoad: true
         autoPlay: true
         muted: true
