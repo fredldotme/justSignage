@@ -24,10 +24,10 @@
 
 ### Technologies
 * Qt with QML
-* QtAV/ffmpeg or QtMultimedia/gstreamer
-* QtWebEngine (for web content support)
+* Video: Hardware acceleration using either libmpv, QtAV/ffmpeg or QtMultimedia/gstreamer
+* Web content: libcef, QtWebEngine
 * Mir (via QtMir)
-* Halium (for Android device support)
+* Halium (for Android driver support)
 
 ### Build the source
 For first time builds please run the build script using the `-d` argument:
