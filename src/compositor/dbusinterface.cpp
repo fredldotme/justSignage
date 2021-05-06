@@ -9,3 +9,8 @@ void DBusInterface::shuffle()
 {
     emit shuffleTriggered();
 }
+
+void DBusInterface::animate()
+{
+    emit animateTriggered();
+}

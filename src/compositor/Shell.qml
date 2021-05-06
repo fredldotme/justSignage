@@ -24,6 +24,7 @@ FocusScope {
     Connections {
         target: dbusInterface
         onShuffleTriggered: shuffleStart()
+        onAnimateTriggered: root.stupidAnimation = !root.stupidAnimation
     }
 
     SequentialAnimation {

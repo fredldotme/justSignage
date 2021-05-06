@@ -13,9 +13,11 @@ public:
 
 public slots:
     void shuffle();
+    void animate();
 
 signals:
     void shuffleTriggered();
+    void animateTriggered();
 };
 
 #endif

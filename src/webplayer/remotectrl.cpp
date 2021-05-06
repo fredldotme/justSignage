@@ -34,3 +34,8 @@ void RemoteCtrl::nextVideo()
 {
     this->m_videoIface->call("nextVideo");
 }
+
+void RemoteCtrl::animate()
+{
+    this->m_compositorIface->call("animate");
+}

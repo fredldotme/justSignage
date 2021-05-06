@@ -13,6 +13,7 @@ public:
 public slots:
     void shuffle();
     void nextVideo();
+    void animate();
 
 private:
     QDBusInterface* m_compositorIface = nullptr;
