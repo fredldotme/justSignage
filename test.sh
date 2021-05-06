@@ -23,8 +23,8 @@ env \
 
 sleep 3
 
-#QT_QPA_PLATFORM=wayland $INSTALL/bin/justsignage-imageplayer &
-QT_QPA_PLATFORM=wayland $INSTALL/bin/justsignage-webplayer &
+QT_QPA_PLATFORM=wayland $INSTALL/bin/justsignage-imageplayer &
+#QT_QPA_PLATFORM=wayland $INSTALL/bin/justsignage-webplayer &
 QT_QPA_PLATFORM=wayland $INSTALL/bin/justsignage-webplayer &
 QT_QPA_PLATFORM=wayland $INSTALL/bin/justsignage-webplayer &
 QT_QPA_PLATFORM=wayland $INSTALL/bin/justsignage-videoplayer &
