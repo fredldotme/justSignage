@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(imageplayer LANGUAGES CXX)
+project(justsignage-imageplayer LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -27,18 +27,20 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(Qt5 COMPONENTS Core Quick REQUIRED)
 
 if(ANDROID)
-    add_library(imageplayer SHARED
+    add_library(justsignage-imageplayer SHARED
       main.cpp
       qml.qrc
     )
 else()
-    add_executable(imageplayer
+    add_executable(justsignage-imageplayer
       main.cpp
       qml.qrc
     )
 endif()
 
-target_compile_definitions(imageplayer
+target_compile_definitions(justsignage-imageplayer
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
-target_link_libraries(imageplayer
+target_link_libraries(justsignage-imageplayer
   PRIVATE Qt5::Core Qt5::Quick)
+
+install(TARGETS justsignage-imageplayer DESTINATION bin)
