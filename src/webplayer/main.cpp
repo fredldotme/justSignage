@@ -1,5 +1,6 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 #include <QtWebEngine/QtWebEngine>
 
 #include "remotectrl.h"
@@ -12,6 +13,10 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
+    if (QGuiApplication::arguments().length() < 2) {
+        return 1;
+    }
+
     QtWebEngine::initialize();
 
     QQmlApplicationEngine engine;
@@ -21,6 +26,7 @@ int main(int argc, char *argv[])
         if (!obj && url == objUrl)
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
+    engine.rootContext()->setContextProperty("compositorName", QGuiApplication::arguments().at(1));
     engine.load(url);
 
     return app.exec();

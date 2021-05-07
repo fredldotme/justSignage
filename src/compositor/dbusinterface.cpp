@@ -7,10 +7,10 @@ DBusInterface::DBusInterface(QObject* parent) : QObject(parent)
 
 void DBusInterface::shuffle()
 {
-    emit shuffleTriggered();
+    Q_EMIT shuffleTriggered();
 }
 
 void DBusInterface::animate()
 {
-    emit animateTriggered();
+    Q_EMIT animateTriggered();
 }

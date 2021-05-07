@@ -1,7 +1,7 @@
 import QtQuick 2.12
 import Unity.Application 0.1
 import Mir.Pointer 0.1
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.12
 
 FocusScope {
     id: root
@@ -25,6 +25,22 @@ FocusScope {
         target: dbusInterface
         onShuffleTriggered: shuffleStart()
         onAnimateTriggered: root.stupidAnimation = !root.stupidAnimation
+    }
+
+    Connections {
+        target: communityNotifier
+        onCommunityMemberEntered: {
+            console.log(id);
+            dialog.title = "Network configuration changed"
+            dialog.text = "New peer joined, would you like to configure it now?"
+            dialog.open()
+        }
+        onCommunityMemberLeft: {
+            console.log(id);
+            dialog.title = "Attention!"   
+            dialog.text = "An important peer left the network, configuration will need to change"
+            dialog.open()
+        }
     }
 
     SequentialAnimation {
@@ -152,6 +168,19 @@ FocusScope {
                     }
                 }
             }
+        }
+
+        Dialog {
+            id: dialog
+            modal: true
+            standardButtons: Dialog.Ok | Dialog.Cancel
+            anchors.centerIn: parent
+            Text {
+                id: textContent
+            }
+            property alias text : textContent.text
+            onAccepted: console.log("Ok clicked")
+            onRejected: console.log("Cancel clicked")
         }
     }
 

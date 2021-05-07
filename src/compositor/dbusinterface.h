@@ -11,11 +11,11 @@ class DBusInterface : public QObject
 public:
     explicit DBusInterface(QObject* parent = nullptr);
 
-public slots:
+public Q_SLOTS:
     void shuffle();
     void animate();
 
-signals:
+Q_SIGNALS:
     void shuffleTriggered();
     void animateTriggered();
 };

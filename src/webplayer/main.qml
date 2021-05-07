@@ -47,6 +47,7 @@ Window {
             <div class=\"center\">
                 <button type=\"button\" onclick=\"remoteCtrl.nextVideo()\">Next video</button>
                 <button type=\"button\" onclick=\"remoteCtrl.shuffle()\">Shuffle!</button>
+                <button type=\"button\" onclick=\"remoteCtrl.shuffleOthers()\">Shuffle others!</button>
                 <button type=\"button\" onclick=\"remoteCtrl.animate()\">Animate!</button>
             </div>
         </div>
@@ -58,7 +59,9 @@ Window {
 
     RemoteCtrl {
         id: remoteCtrl
+        compositor: compositorName
         WebChannel.id: "remoteCtrl"
+        Component.onCompleted: remoteCtrl.connect()
     }
 
     WebChannel {

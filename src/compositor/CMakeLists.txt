@@ -33,6 +33,7 @@ pkg_check_modules(MIRCLIENT mirclient>=0.26 REQUIRED)
 pkg_check_modules(MIRRENDERERGLDEV mir-renderer-gl-dev>=0.26 REQUIRED)
 pkg_check_modules(MIRAL miral>=1.1.0 REQUIRED)
 pkg_check_modules(QTMIRSERVER qtmirserver>=0.6.1 REQUIRED)
+pkg_check_modules(GIO REQUIRED gio-unix-2.0 REQUIRED)
 
 include_directories(
     SYSTEM
@@ -50,6 +51,7 @@ set(PROJECT_SOURCES
     screens.cpp
     screenwindow.cpp
     pointerposition.cpp
+    communitynotifier.cpp
     qml.qrc
 )
 

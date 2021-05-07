@@ -4,10 +4,15 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QDir>
-#include <QtDBus/QDBusConnection>
+#include <QDBusConnection>
+#include <QDBusConnectionInterface>
+#include <QRandomGenerator>
 #include <QDebug>
+#include <QProcess>
 
 #include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 #include <qtmir/mirserverapplication.h>
 #include <qtmir/displayconfigurationpolicy.h>
@@ -20,6 +25,7 @@
 #include "screenwindow.h"
 #include "pointerposition.h"
 #include "dbusinterface.h"
+#include "communitynotifier.h"
 
 inline QString stringFromEdid(const miral::Edid& edid)
 {
@@ -176,6 +182,21 @@ struct DemoSessionAuthorizer : qtmir::SessionAuthorizer
     }
 };
 
+QString GetRandomString()
+{
+    qsrand(QRandomGenerator::global()->generate());
+    const QString possibleCharacters("abcdefghijklmnopqrstuvwxyz");
+    const int randomStringLength = 3;
+
+    QString ret;
+    for(int i = 0; i < randomStringLength; i++) {
+       int index = qrand() % possibleCharacters.length();
+       QChar nextChar = possibleCharacters.at(index);
+       ret.append(nextChar);
+   }
+   return ret;
+}
+
 int main(int argc, char *argv[])
 {
     {
@@ -189,17 +210,6 @@ int main(int argc, char *argv[])
             }
         }
     }
-
-    DBusInterface dbusInterface;
-
-    if(!QDBusConnection::sessionBus().registerService("io.justsignage.compositor") ||
-            !QDBusConnection::sessionBus().registerObject("/io/justsignage/compositor", &dbusInterface,
-                                                          QDBusConnection::ExportAllSlots |
-                                                          QDBusConnection::ExportAllProperties |
-                                                          QDBusConnection::ExportAllSignals)) {
-        return 2;
-    }
-
 
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
@@ -225,6 +235,20 @@ int main(int argc, char *argv[])
             return screens;
     });
     qmlRegisterUncreatableType<qtmir::Screen>("QtMir", 0, 1, "Screen", "Screen is not creatable.");
+    qmlRegisterType<CommunityNotifier>("justSignage", 1, 0, "CommunityNotifier");
+
+    DBusInterface dbusInterface;
+    const QString serviceTemplate = QStringLiteral("io.justsignage.compositor.%1");
+    QString serviceName = serviceTemplate.arg(GetRandomString());
+    if(!QDBusConnection::sessionBus().registerService(serviceName) ||
+            !QDBusConnection::sessionBus().registerObject("/io/justsignage/compositor", &dbusInterface,
+                                                          QDBusConnection::ExportAllSlots |
+                                                          QDBusConnection::ExportAllProperties |
+                                                          QDBusConnection::ExportAllSignals)) {
+        return 2;
+    }
+
+    CommunityNotifier communityNotifier;
 
     QQmlApplicationEngine engine;
     const QUrl url(QStringLiteral("qrc:/main.qml"));
@@ -234,7 +258,17 @@ int main(int argc, char *argv[])
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
     engine.rootContext()->setContextProperty("dbusInterface", &dbusInterface);
+    engine.rootContext()->setContextProperty("communityNotifier", &communityNotifier);
     engine.load(url);
+
+    QProcess videoPlayer;
+    videoPlayer.start("justsignage-videoplayer", QStringList() << serviceName << "-platform" << "wayland");
+
+    QProcess webPlayer;
+    webPlayer.start("justsignage-webplayer", QStringList() << serviceName << "-platform" << "wayland");
+
+    QProcess imagePlayer;
+    imagePlayer.start("justsignage-imageplayer", QStringList() << serviceName << "-platform" << "wayland");
 
     const int result = application->exec();
     delete application;
