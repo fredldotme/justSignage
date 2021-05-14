@@ -71,7 +71,7 @@ function build_cmake {
         -DCMAKE_CXX_FLAGS="-isystem $INSTALL/include -isystem $INSTALL/include/qtmir -L$INSTALL/lib -Wno-deprecated-declarations -Wl,-rpath-link,$INSTALL/lib" \
         -DCMAKE_C_FLAGS="-isystem $INSTALL/include -isystem $INSTALL/include/qtmir -L$INSTALL/lib -Wno-deprecated-declarations -Wl,-rpath-link,$INSTALL/lib" \
         -DCMAKE_LD_FLAGS="-L$INSTALL/lib" \
-        -DCMAKE_LIBRARY_PATH=$INSTALL/lib
+        -DCMAKE_LIBRARY_PATH=$INSTALL/lib $1
     make VERBOSE=1 -j`nproc --all`
     sudo make install
 }
@@ -80,7 +80,7 @@ function build_3rdparty_cmake {
     echo "Building: $1"
     cd $SRC_PATH
     cd 3rdparty/$1
-    build_cmake
+    build_cmake $2
 }
 
 function build_src {
@@ -112,6 +112,7 @@ if [ "$BUILD_DEPS" == "1" ]; then
     build_3rdparty_cmake lomiri-url-dispatcher
     build_3rdparty_cmake qtmir
     build_3rdparty_cmake QtAV
+    build_3rdparty_cmake QtZeroConf "-DBUILD_SHARED_LIBS=ON"
 fi
 
 # Build main sources
