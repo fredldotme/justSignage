@@ -28,3 +28,6 @@
 [submodule "3rdparty/QtAV"]
 	path = 3rdparty/QtAV
 	url = https://github.com/fredldotme/QtAV
+[submodule "3rdparty/QtZeroConf"]
+	path = 3rdparty/QtZeroConf
+	url = https://github.com/fredldotme/QtZeroConf
