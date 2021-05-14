@@ -1,0 +1,12 @@
+{
+  "builder": "custom",
+  "default": "clean build",
+  "kill": "justsignage-remote",
+  "dependencies_target": [
+    "libavahi-client-dev",
+    "libavahi-common-dev"
+  ],
+  "build": "${ROOT}/build.sh -c -d -t -s=remote",
+  "make_jobs": 4,
+  "qt_version": "5.12"
+}
