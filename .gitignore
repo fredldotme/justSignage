@@ -82,3 +82,4 @@ src/build-qtavplayer-Desktop-Debug/
 build-src-Desktop-Debug/
 
 *.snap
+.clickable
