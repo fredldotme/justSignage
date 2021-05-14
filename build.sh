@@ -9,6 +9,8 @@ source common.sh
 
 if [ "$SNAPCRAFT_PART_INSTALL" != "" ]; then
     INSTALL=$SNAPCRAFT_PART_INSTALL/opt/${PROJECT}
+elif [ "$INSTALL_DIR" != "" ]; then
+    INSTALL=$INSTALL_DIR
 else
     INSTALL=/opt/${PROJECT}-${VERSION}
 fi
@@ -16,11 +18,18 @@ fi
 # Internal variables
 CLEAN=0
 BUILD_DEPS=0
+SUB_PROJECTS="all"
+UBUNTU_TOUCH=0
+
+# Overridable number of build processors
+if [ "$NUM_PROC" == "" ]; then
+    NUM_PROCS=$(nproc --all)
+fi
 
 # Argument parsing
 while [[ $# -gt 0 ]]; do
-    key="$1"
-    case $key in
+    arg="$1"
+    case $arg in
         -c|--clean)
             CLEAN=1
             shift
@@ -29,8 +38,16 @@ while [[ $# -gt 0 ]]; do
             BUILD_DEPS=1
             shift
         ;;
+        "-s="*|"--subprojects="*)
+            SUB_PROJECTS="${arg#*=}"
+            shift
+        ;;
+        -t|--touch)
+            UBUNTU_TOUCH=1
+            shift
+        ;;
         *)
-            echo "usage: $0 [-d|--deps] [-c|--clean]"
+            echo "usage: $0 [-d|--deps] [-c|--clean] [-s=<..,..>|--subprojects=<..,..>] [-t|--touch]"
             exit 1
         ;;
     esac
@@ -42,8 +59,12 @@ function build_3rdparty_autogen {
     cd 3rdparty/$1
     ./autogen.sh
     ./configure --prefix=$INSTALL
-    make -j`nproc --all`
-    sudo make install
+    make -j$NUM_PROCS
+    if [ -f /usr/bin/sudo ]; then
+        sudo make install
+    else
+        make install
+    fi
 }
 
 function build_cmake {
@@ -71,9 +92,13 @@ function build_cmake {
         -DCMAKE_CXX_FLAGS="-isystem $INSTALL/include -isystem $INSTALL/include/qtmir -L$INSTALL/lib -Wno-deprecated-declarations -Wl,-rpath-link,$INSTALL/lib" \
         -DCMAKE_C_FLAGS="-isystem $INSTALL/include -isystem $INSTALL/include/qtmir -L$INSTALL/lib -Wno-deprecated-declarations -Wl,-rpath-link,$INSTALL/lib" \
         -DCMAKE_LD_FLAGS="-L$INSTALL/lib" \
-        -DCMAKE_LIBRARY_PATH=$INSTALL/lib $1
-    make VERBOSE=1 -j`nproc --all`
-    sudo make install
+        -DCMAKE_LIBRARY_PATH=$INSTALL/lib $@
+    make VERBOSE=1 -j$NUM_PROCS
+    if [ -f /usr/bin/sudo ]; then
+        sudo make install
+    else
+        make install
+    fi
 }
 
 function build_3rdparty_cmake {
@@ -83,17 +108,17 @@ function build_3rdparty_cmake {
     build_cmake $2
 }
 
-function build_src {
-    echo "Building justSignage"
+function build_project {
+    echo "Building project"
     cd $SRC_PATH
     cd src
-    build_cmake
+    build_cmake $1
 }
 
 # Install distro-provided dependencies
-if [ -f /usr/bin/apt ]; then
+if [ -f /usr/bin/apt ] && [ -f /usr/bin/sudo ]; then
     bash deps/apt.sh
-elif [ -f /usr/bin/dnf ]; then
+elif [ -f /usr/bin/dnf ] && [ -f /usr/bin/sudo ]; then
     bash deps/dnf.sh
 fi
 
@@ -106,14 +131,32 @@ if [ "$BUILD_DEPS" == "1" ]; then
     fi
 
     # Build direct dependencies
-    build_3rdparty_autogen click
-    build_3rdparty_cmake lomiri-api
-    build_3rdparty_cmake lomiri-app-launch
-    build_3rdparty_cmake lomiri-url-dispatcher
-    build_3rdparty_cmake qtmir
-    build_3rdparty_cmake QtAV
+    if [ "$UBUNTU_TOUCH" == "0" ]; then
+        build_3rdparty_autogen click
+        build_3rdparty_cmake lomiri-api
+        build_3rdparty_cmake lomiri-app-launch
+        build_3rdparty_cmake lomiri-url-dispatcher
+        build_3rdparty_cmake qtmir
+        build_3rdparty_cmake QtAV
+    fi
     build_3rdparty_cmake QtZeroConf "-DBUILD_SHARED_LIBS=ON"
 fi
 
+# Find subprojects to build as requested
+IFS=',' read -r -a PRJS <<< "$SUB_PROJECTS"
+SRC_ARG=""
+for P in "${PRJS[@]}"; do
+    PROJ=$(echo "$P" | awk '{ print toupper($0) }')
+    SRC_ARG="$SRC_ARG -DJUSTSIGNAGE_PROJECT_$PROJ=ON"
+done
+
+echo "Selected projects: $SUB_PROJECTS"
+
+# Include click packaging metadata on Ubuntu Touch
+UBUNTU_TOUCH_ARG=""
+if [ "$UBUNTU_TOUCH" == "1" ]; then
+    UBUNTU_TOUCH_ARG="-DJUSTSIGNAGE_CLICK=ON"
+fi
+
 # Build main sources
-build_src
+build_project "$UBUNTU_TOUCH_ARG $SRC_ARG"
