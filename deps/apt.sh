@@ -58,6 +58,8 @@ sudo apt install -y \
     libavdevice-dev \
     libavformat-dev \
     libswresample-dev \
+    libavahi-client-dev \
+    libavahi-common-dev \
     gettext \
     intltool \
     libtool \
