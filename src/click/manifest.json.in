@@ -1,0 +1,15 @@
+{
+    "name": "me.fredl.justsignage",
+    "description": "Remote control app for justSignage",
+    "architecture": "@CLICK_ARCH@",
+    "title": "justSignage Remote",
+    "hooks": {
+        "justsignage": {
+            "apparmor": "justsignage.apparmor",
+            "desktop":  "justsignage.desktop"
+        }
+    },
+    "version": "@BUILD_VERSION@",
+    "maintainer": "Alfred Neumayer <dev.beidl@gmail.com>",
+    "framework" : "@CLICK_FRAMEWORK@"
+}

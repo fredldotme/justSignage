@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=justSignage Remote
+Exec=bin/justsignage-remote %U
+Icon=justsignage-remote.svg
+Terminal=false
+Type=Application
+X-Ubuntu-Touch=true
