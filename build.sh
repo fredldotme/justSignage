@@ -57,8 +57,10 @@ function build_3rdparty_autogen {
     echo "Building: $1"
     cd $SRC_PATH
     cd 3rdparty/$1
-    ./autogen.sh
-    ./configure --prefix=$INSTALL
+    if [ -f ./autogen.sh ]; then
+        ./autogen.sh
+    fi
+    ./configure --prefix=$INSTALL $2
     make -j$NUM_PROCS
     if [ -f /usr/bin/sudo ]; then
         sudo make install
@@ -132,6 +134,7 @@ if [ "$BUILD_DEPS" == "1" ]; then
 
     # Build direct dependencies
     if [ "$UBUNTU_TOUCH" == "0" ]; then
+        build_3rdparty_autogen ffmpeg "--enable-gpl --enable-opengl --enable-mmal --enable-nonfree --enable-neon --enable-shared --disable-static"
         build_3rdparty_autogen click
         build_3rdparty_cmake lomiri-api
         build_3rdparty_cmake lomiri-app-launch
