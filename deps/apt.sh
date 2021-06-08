@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo apt install -y \
+sudo apt install -y --no-install-recommends \
     build-essential \
     cmake \
     cmake-extras \
@@ -54,13 +54,15 @@ sudo apt install -y \
     libsqlite3-dev \
     libapparmor-dev \
     libfontconfig1-dev \
-    libavcodec-dev \
-    libavdevice-dev \
-    libavformat-dev \
-    libswresample-dev \
+    libopenal-dev \
     libavahi-client-dev \
     libavahi-common-dev \
     gettext \
     intltool \
     libtool \
     valgrind
+
+if [ $(uname -p) == "aarch64" ]; then
+    sudo apt install -y --no-install-recommends \
+        libraspberrypi-dev
+fi
