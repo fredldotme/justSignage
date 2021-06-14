@@ -33,4 +33,4 @@
 	url = https://github.com/fredldotme/QtZeroConf
 [submodule "3rdparty/ffmpeg"]
 	path = 3rdparty/ffmpeg
-	url = https://github.com/RPi-Distro/ffmpeg.git
+	url = https://github.com/fredldotme/ffmpeg.git
