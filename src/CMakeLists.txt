@@ -7,6 +7,7 @@ option(JUSTSIGNAGE_PROJECT_VIDEOPLAYER "Build the QtMultimedia player" OFF)
 option(JUSTSIGNAGE_PROJECT_WEBPLAYER "Build the QtWebEngine player" OFF)
 option(JUSTSIGNAGE_PROJECT_IMAGEPLAYER "Build the Qt-based image player" OFF)
 option(JUSTSIGNAGE_PROJECT_QTAVPLAYER "Build the QtAV video player" OFF)
+option(JUSTSIGNAGE_PROJECT_MARQUEEPLAYER "Build the Marquee overlay" OFF)
 option(JUSTSIGNAGE_PROJECT_REMOTE "Build the remote control app" OFF)
 
 option(JUSTSIGNAGE_CLICK "Build with click package metadata" OFF)
@@ -17,6 +18,7 @@ if (JUSTSIGNAGE_PROJECT_ALL)
   set(JUSTSIGNAGE_PROJECT_WEBPLAYER ON)
   set(JUSTSIGNAGE_PROJECT_IMAGEPLAYER ON)
   set(JUSTSIGNAGE_PROJECT_QTAVPLAYER ON)
+  set(JUSTSIGNAGE_PROJECT_MARQUEEPLAYER ON)
   set(JUSTSIGNAGE_PROJECT_REMOTE ON)
 endif()
 
@@ -38,6 +40,10 @@ endif()
 
 if (JUSTSIGNAGE_PROJECT_QTAVPLAYER)
   add_subdirectory(qtavplayer)
+endif()
+
+if (JUSTSIGNAGE_PROJECT_MARQUEEPLAYER)
+  add_subdirectory(marqueeplayer)
 endif()
 
 if (JUSTSIGNAGE_PROJECT_REMOTE)
