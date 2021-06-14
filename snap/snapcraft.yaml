@@ -72,11 +72,6 @@ parts:
       - libass9
       - libasyncns0
       - libavc1394-0
-      - libavcodec58
-      - libavdevice58
-      - libavfilter7
-      - libavformat58
-      - libavutil56
       - libbluray2
       - libboost-filesystem1.71.0
       - libboost-iostreams1.71.0
@@ -187,6 +182,7 @@ parts:
       - libqt5widgets5
       - libqtdbusmock1
       - libqtdbustest1
+      - libraspberrypi0
       - libraw1394-11
       - libre2-5
       - libroken18-heimdal
@@ -209,8 +205,6 @@ parts:
       - libsratom-0-0
       - libssh-4
       - libssh-gcrypt-4
-      - libswresample3
-      - libswscale5
       - libthai0
       - libtheora0
       - libtwolame0
@@ -270,3 +264,4 @@ parts:
       - qml-module-qtquick-controls2
       - qml-module-qtquick-window2
       - qml-module-qtwebengine
+      - qtwayland5
