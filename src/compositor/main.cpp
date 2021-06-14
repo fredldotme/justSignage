@@ -261,14 +261,20 @@ int main(int argc, char *argv[])
     engine.rootContext()->setContextProperty("communityNotifier", &communityNotifier);
     engine.load(url);
 
+    const QByteArray snapDataPath = qgetenv("SNAP_USER_DATA");
+    QString videoFile = QString::fromUtf8(snapDataPath) + QStringLiteral("/1.mkv");
+
     QProcess videoPlayer;
-    videoPlayer.start("justsignage-videoplayer", QStringList() << serviceName << "-platform" << "wayland");
+    videoPlayer.start("justsignage-qtavplayer", QStringList() << serviceName << "-platform" << "wayland" << videoFile);
 
     QProcess webPlayer;
     webPlayer.start("justsignage-webplayer", QStringList() << serviceName << "-platform" << "wayland");
 
     QProcess imagePlayer;
     imagePlayer.start("justsignage-imageplayer", QStringList() << serviceName << "-platform" << "wayland");
+
+    QProcess marqueePlayer;
+    marqueePlayer.start("justsignage-marqueeplayer", QStringList() << serviceName << "-platform" << "wayland");
 
     const int result = application->exec();
     delete application;
