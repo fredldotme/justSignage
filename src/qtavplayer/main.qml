@@ -9,6 +9,7 @@ Window {
     title: qsTr("Hello World")
     flags: Qt.ToolTip | Qt.FramelessWindowHint | Qt.WA_TranslucentBackground
     color: "#00000000"
+    property int counter : 0
 
     VideoOutput2 {
         anchors.fill: parent
@@ -19,7 +20,7 @@ Window {
 
     MediaPlayer {
         id: player
-        source: ""
+        source: files[counter % files.length]
         loops: MediaPlayer.Infinite
     }
 

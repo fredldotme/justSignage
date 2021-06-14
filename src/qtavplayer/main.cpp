@@ -1,3 +1,5 @@
+#include <QQmlContext>
+#include <QFile>
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 
@@ -14,6 +16,15 @@ int main(int argc, char *argv[])
         if (!obj && url == objUrl)
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
+
+    QStringList files;
+    for (const QString& arg : app.arguments()) {
+        if (!QFile::exists(arg))
+            continue;
+        files << arg;
+    }
+
+    engine.rootContext()->setContextProperty("files", files);
     engine.load(url);
 
     return app.exec();

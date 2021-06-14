@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5)
 
-project(qtavplayer LANGUAGES CXX)
+project(justsignage-qtavplayer LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -28,18 +28,19 @@ find_package(Qt5 COMPONENTS Core Quick REQUIRED)
 find_package(QmlAV)
 
 if(ANDROID)
-    add_library(qtavplayer SHARED
+    add_library(justsignage-qtavplayer SHARED
       main.cpp
       qml.qrc
     )
 else()
-    add_executable(qtavplayer
+    add_executable(justsignage-qtavplayer
       main.cpp
       qml.qrc
     )
 endif()
 
-target_compile_definitions(qtavplayer
+target_compile_definitions(justsignage-qtavplayer
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
-target_link_libraries(qtavplayer
+target_link_libraries(justsignage-qtavplayer
   PRIVATE Qt5::Core Qt5::Quick QtAV)
+install(TARGETS justsignage-qtavplayer DESTINATION bin)
